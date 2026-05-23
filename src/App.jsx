@@ -218,32 +218,8 @@ export default function Portfolio() {
         </div>
       </a>
 
+     
       {/* PROJECT 2 */}
-      <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-
-        <div className="h-72 bg-[url('https://images.unsplash.com/photo-1521334884684-d80222895322')] bg-cover bg-center group-hover:scale-110 transition duration-700" />
-        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition" />
-
-        <div className="absolute bottom-0 p-6">
-          <p className="text-green-400 text-xs tracking-widest">
-            BRAND SYSTEM
-          </p>
-
-          <h4 className="text-xl font-light mt-1">
-            NOIR — Fashion Identity
-          </h4>
-
-          <p className="text-gray-400 text-sm mt-2">
-            Luxury streetwear branding system built for modern fashion labels.
-          </p>
-
-          <p className="text-white/50 text-xs mt-4">
-            Case Study (Private)
-          </p>
-        </div>
-      </div>
-
-      {/* PROJECT 3 */}
       <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
 
         <div className="h-72 bg-[url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d')] bg-cover bg-center group-hover:scale-110 transition duration-700" />
