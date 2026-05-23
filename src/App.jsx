@@ -1,265 +1,271 @@
-export default function VelvetBrewCafe() {
-  const menuItems = [
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
+import { motion } from "framer-motion";
+
+export default function Portfolio() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sent, setSent] = useState(false);
+
+  const PHONE = "+20 109 733 2336";
+  const WHATSAPP_NUMBER = "201097332336";
+
+  const projects = [
     {
-      name: "Espresso",
-      desc: "Rich and bold handcrafted espresso.",
-      price: "$4",
-      image:
-        "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1200&auto=format&fit=crop",
+      name: "Cafe Website (CafeDemo)",
+      desc: "Luxury café landing page built with React + Tailwind CSS",
+      link: "http://cafedemo-portfolio.vercel.app/",
     },
     {
-      name: "Matcha Latte",
-      desc: "Smooth premium Japanese matcha.",
-      price: "$6",
-      image:
-        "https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1200&auto=format&fit=crop",
+      name: "Gym Landing Page",
+      desc: "High conversion fitness website",
+      link: "#",
     },
     {
-      name: "Chocolate Cake",
-      desc: "Soft layered cake with dark chocolate.",
-      price: "$8",
-      image:
-        "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1200&auto=format&fit=crop",
+      name: "Real Estate UI",
+      desc: "Modern property listing interface",
+      link: "#",
     },
   ];
 
-  const reviews = [
-    {
-      name: "Sarah M.",
-      review:
-        "One of the most beautiful cafés I’ve visited. Amazing coffee and atmosphere.",
-    },
-    {
-      name: "David R.",
-      review:
-        "The website experience already feels premium — and the café matches it perfectly.",
-    },
-    {
-      name: "Lina K.",
-      review:
-        "Beautiful interior, friendly staff, and incredible desserts.",
-    },
-  ];
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0 },
+  };
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!form.name || !form.email || !form.message) return;
+
+    try {
+      await emailjs.send(
+        "service_opyze2g",
+        "template_swgua1n",
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+        },
+        "EvvjimI4p293iE8zL"
+      );
+
+      setSent(true);
+      setForm({ name: "", email: "", message: "" });
+      setTimeout(() => setSent(false), 3000);
+    } catch (err) {
+      alert("Failed to send message");
+    }
+  };
 
   return (
     <div className="bg-black text-white min-h-screen font-sans">
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-black/70 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold tracking-wide text-amber-200">
-            Velvet Brew
+
+      {/* FLOATING CTA */}
+      <div className="fixed bottom-5 right-5 flex flex-col gap-3 z-50">
+        <a
+          href={`https://wa.me/${WHATSAPP_NUMBER}`}
+          className="bg-green-500 px-4 py-3 rounded-full shadow-lg hover:scale-110 transition"
+        >
+          WhatsApp
+        </a>
+
+        <a
+          href="#contact"
+          className="bg-white text-black px-4 py-3 rounded-full shadow-lg hover:scale-110 transition"
+        >
+          Hire Me
+        </a>
+      </div>
+
+      {/* NAV */}
+      <header className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+          <h1 className="font-bold tracking-wide">
+            Youssef Hossam <span className="text-white/40">// Developer</span>
           </h1>
 
-          <div className="hidden md:flex gap-8 text-sm text-gray-300">
-            <a href="#about" className="hover:text-white transition">
-              About
-            </a>
-            <a href="#menu" className="hover:text-white transition">
-              Menu
-            </a>
-            <a href="#reviews" className="hover:text-white transition">
-              Reviews
-            </a>
-            <a href="#contact" className="hover:text-white transition">
-              Contact
-            </a>
-          </div>
-        </div>
-      </nav>
+          <nav className="hidden md:flex gap-8 text-sm text-gray-300">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#work">Work</a>
+            <a href="#why">Why Me</a>
+            <a href="#contact">Contact</a>
+          </nav>
 
-      {/* Hero */}
-      <section
-        className="h-screen bg-cover bg-center flex items-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop')",
-        }}
-      >
-        <div className="bg-black/60 w-full h-full flex items-center">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-2xl">
-              <p className="uppercase tracking-[0.4em] text-amber-200 mb-4 text-sm">
-                Premium Coffee Experience
-              </p>
-
-              <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
-                Crafted Coffee.
-                <br />
-                Premium Experience.
-              </h1>
-
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-                A luxury café experience with handcrafted coffee, elegant desserts,
-                and a modern atmosphere designed for comfort and style.
-              </p>
-
-              <div className="flex gap-4 flex-wrap">
-                <button className="bg-amber-200 text-black px-8 py-4 rounded-2xl font-semibold hover:scale-105 transition">
-                  Reserve a Table
-                </button>
-
-                <button className="border border-white/30 px-8 py-4 rounded-2xl hover:bg-white hover:text-black transition">
-                  View Menu
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About */}
-      <section id="about" className="py-24 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <img
-              src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1200&auto=format&fit=crop"
-              alt="Cafe"
-              className="rounded-3xl shadow-2xl"
-            />
-          </div>
-
-          <div>
-            <p className="text-amber-200 uppercase tracking-[0.3em] text-sm mb-4">
-              About Us
-            </p>
-
-            <h2 className="text-4xl font-bold mb-6">
-              More Than Coffee — It’s An Experience.
-            </h2>
-
-            <p className="text-gray-400 leading-relaxed mb-8">
-              Velvet Brew combines premium coffee craftsmanship with luxury modern
-              interior design to create a relaxing destination for coffee lovers,
-              creatives, and friends.
-            </p>
-
-            <div className="grid grid-cols-3 gap-6">
-              <div className="bg-white/5 p-6 rounded-2xl text-center border border-white/10">
-                <h3 className="text-3xl font-bold text-amber-200">10K+</h3>
-                <p className="text-gray-400 mt-2 text-sm">Customers</p>
-              </div>
-
-              <div className="bg-white/5 p-6 rounded-2xl text-center border border-white/10">
-                <h3 className="text-3xl font-bold text-amber-200">4.9</h3>
-                <p className="text-gray-400 mt-2 text-sm">Rating</p>
-              </div>
-
-              <div className="bg-white/5 p-6 rounded-2xl text-center border border-white/10">
-                <h3 className="text-3xl font-bold text-amber-200">2018</h3>
-                <p className="text-gray-400 mt-2 text-sm">Founded</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Menu */}
-      <section id="menu" className="py-24 px-6 bg-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-amber-200 uppercase tracking-[0.3em] text-sm mb-4">
-              Featured Menu
-            </p>
-
-            <h2 className="text-4xl font-bold">Customer Favorites</h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {menuItems.map((item, index) => (
-              <div
-                key={index}
-                className="bg-black rounded-3xl overflow-hidden border border-white/10 hover:scale-105 transition duration-300"
-              >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="h-64 w-full object-cover"
-                />
-
-                <div className="p-6">
-                  <div className="flex justify-between items-center mb-3">
-                    <h3 className="text-2xl font-semibold">{item.name}</h3>
-                    <span className="text-amber-200 font-bold">{item.price}</span>
-                  </div>
-
-                  <p className="text-gray-400">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Reviews */}
-      <section id="reviews" className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-amber-200 uppercase tracking-[0.3em] text-sm mb-4">
-              Testimonials
-            </p>
-
-            <h2 className="text-4xl font-bold">What Customers Say</h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {reviews.map((review, index) => (
-              <div
-                key={index}
-                className="bg-white/5 border border-white/10 p-8 rounded-3xl"
-              >
-                <p className="text-gray-300 leading-relaxed mb-6">
-                  “{review.review}”
-                </p>
-
-                <h4 className="font-semibold text-amber-200">{review.name}</h4>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact */}
-      <section id="contact" className="py-24 px-6 bg-white/5">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-amber-200 uppercase tracking-[0.3em] text-sm mb-4">
-            Contact
-          </p>
-
-          <h2 className="text-4xl font-bold mb-6">
-            Visit Velvet Brew Today
-          </h2>
-
-          <p className="text-gray-400 mb-10 leading-relaxed">
-            Experience handcrafted coffee, premium desserts, and a relaxing modern
-            atmosphere in the heart of the city.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-black p-6 rounded-2xl border border-white/10">
-              <h3 className="font-semibold text-lg mb-2">Location</h3>
-              <p className="text-gray-400">Downtown Cairo</p>
-            </div>
-
-            <div className="bg-black p-6 rounded-2xl border border-white/10">
-              <h3 className="font-semibold text-lg mb-2">Phone</h3>
-              <p className="text-gray-400">+20 109 7332 336</p>
-            </div>
-
-            <div className="bg-black p-6 rounded-2xl border border-white/10">
-              <h3 className="font-semibold text-lg mb-2">Hours</h3>
-              <p className="text-gray-400">8 AM — 12 AM</p>
-            </div>
-          </div>
-
-          <button className="bg-amber-200 text-black px-10 py-4 rounded-2xl font-semibold hover:scale-105 transition">
-            Book Now
+          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+            ☰
           </button>
         </div>
+
+        {menuOpen && (
+          <div className="md:hidden px-6 pb-4 space-y-2 text-gray-300">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#work">Work</a>
+            <a href="#why">Why Me</a>
+            <a href="#contact">Contact</a>
+          </div>
+        )}
+      </header>
+
+      {/* HERO (ULTRA PREMIUM) */}
+      <motion.section
+        id="home"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="pt-40 pb-28 text-center px-6 relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-blue-900/20 to-black blur-3xl"></div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-5xl md:text-7xl font-bold relative"
+        >
+          I Build Websites That <br /> Bring You Clients
+        </motion.h2>
+
+        <p className="text-gray-400 mt-6 max-w-2xl mx-auto relative">
+          Freelance Web Developer focused on conversion-driven design, modern UI systems, and fast scalable web apps for real businesses.
+        </p>
+
+        <div className="mt-10 flex justify-center gap-4 relative">
+          <a
+            href="#work"
+            className="bg-white text-black px-6 py-3 rounded-xl font-semibold hover:scale-105 transition"
+          >
+            View Work
+          </a>
+          <a
+            href="#contact"
+            className="border border-white/20 px-6 py-3 rounded-xl hover:bg-white hover:text-black transition"
+          >
+            Contact Me
+          </a>
+        </div>
+      </motion.section>
+
+      {/* ABOUT */}
+      <motion.section
+        id="about"
+        initial="hidden"
+        whileInView="show"
+        variants={fadeUp}
+        transition={{ duration: 0.6 }}
+        className="max-w-5xl mx-auto px-6 py-20"
+      >
+        <h3 className="text-3xl font-bold mb-6">About Me</h3>
+
+        <p className="text-gray-400 leading-relaxed">
+          I help businesses turn ideas into high-performing websites that generate real revenue. My focus is not design alone — it's building systems that convert visitors into paying customers.
+        </p>
+      </motion.section>
+
+      {/* WORK */}
+      <section id="work" className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h3 className="text-3xl font-bold text-center mb-12">Selected Work</h3>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {projects.map((p, i) => (
+              <motion.a
+                key={i}
+                href={p.link}
+                target={p.link !== "#" ? "_blank" : "_self"}
+                whileHover={{ scale: 1.05 }}
+                className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition block"
+              >
+                <h4 className="font-bold">{p.name}</h4>
+                <p className="text-gray-400 text-sm mt-2">{p.desc}</p>
+                <p className="text-green-400 text-xs mt-3">
+                  {p.link !== "#" ? "View Live →" : "Coming Soon"}
+                </p>
+              </motion.a>
+            ))}
+          </div>
+        </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-white/10 py-8 text-center text-gray-500 text-sm">
-        © 2026 Velvet Brew Café — Premium Portfolio Project
+      {/* WHY ME */}
+      <section id="why" className="py-20 px-6 bg-white/5">
+        <div className="max-w-6xl mx-auto text-center">
+          <h3 className="text-3xl font-bold mb-12">Why Clients Choose Me</h3>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              "Fast Delivery",
+              "Modern Clean Design",
+              "Business Conversion Focus",
+            ].map((t, i) => (
+              <div key={i} className="p-6 border border-white/10 rounded-xl bg-black">
+                {t}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section id="contact" className="py-24 px-6">
+        <div className="max-w-2xl mx-auto text-center">
+          <h3 className="text-3xl font-bold mb-6">Let’s Build Something Powerful</h3>
+
+          <p className="text-gray-400 mb-6">
+            Have a project? I’ll turn it into a high-converting website.
+          </p>
+
+          <p className="text-gray-300 mb-2">📞 {PHONE}</p>
+
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            className="text-green-400 hover:underline"
+          >
+            WhatsApp Chat
+          </a>
+
+          <form onSubmit={handleSubmit} className="space-y-4 mt-6">
+            <input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Your Name"
+              className="w-full p-3 rounded-xl bg-black border border-white/10"
+            />
+
+            <input
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Your Email"
+              className="w-full p-3 rounded-xl bg-black border border-white/10"
+            />
+
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              placeholder="Your Project Idea"
+              className="w-full p-3 rounded-xl bg-black border border-white/10 h-32"
+            />
+
+            <button className="w-full bg-white text-black py-3 rounded-xl font-semibold hover:scale-105 transition">
+              Send Message
+            </button>
+
+            {sent && <p className="text-green-400">Message sent ✔</p>}
+          </form>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="text-center py-6 border-t border-white/10 text-gray-500 text-sm">
+        © 2026 Youssef Hossam — Built for clients
       </footer>
     </div>
   );
