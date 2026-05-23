@@ -7,28 +7,45 @@ export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
-  const [cursor, setCursor] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+  const lenis = new Lenis();
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+
+  return () => lenis.destroy();
+}, []);
+
 
   const PHONE = "+20 109 733 2336";
   const WHATSAPP_NUMBER = "201097332336";
 
-  // Apple smooth scroll
-  useEffect(() => {
-    const lenis = new Lenis();
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
-  }, []);
+  const projects = [
+    {
+      name: "Cafe Website (CafeDemo)",
+      desc: "Luxury café landing page built with React + Tailwind CSS",
+      link: "http://cafedemo-portfolio.vercel.app/",
+    },
+    {
+      name: "Gym Landing Page",
+      desc: "High conversion fitness website",
+      link: "#",
+    },
+    {
+      name: "Real Estate UI",
+      desc: "Modern property listing interface",
+      link: "#",
+    },
+  ];
 
-  // Custom cursor
-  useEffect(() => {
-    const move = (e) => setCursor({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0 },
+  };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -54,181 +71,307 @@ export default function Portfolio() {
       setSent(true);
       setForm({ name: "", email: "", message: "" });
       setTimeout(() => setSent(false), 3000);
-    } catch {
+    } catch (err) {
       alert("Failed to send message");
     }
   };
 
-  const MagneticButton = ({ children }) => (
-    <button
-      onMouseMove={(e) => {
-        const x = (e.nativeEvent.offsetX - e.target.clientWidth / 2) / 10;
-        const y = (e.nativeEvent.offsetY - e.target.clientHeight / 2) / 10;
-        e.target.style.transform = `translate(${x}px, ${y}px)`;
-      }}
-      onMouseLeave={(e) => (e.target.style.transform = "translate(0px,0px)")}
-      className="transition duration-200"
-    >
-      {children}
-    </button>
-  );
-
-  const reveal = {
-    hidden: { opacity: 0, y: 80, filter: "blur(10px)" },
-    show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1 } },
-  };
-
-  const projects = [
-    {
-      id: "01",
-      tag: "LIVE SYSTEM",
-      title: "CafeDemo Experience",
-      desc: "Conversion-focused café website built as a digital product.",
-      img: "https://images.unsplash.com/photo-1521017432531-fbd92d768814",
-      link: "https://cafedemo-portfolio-39tiemm5s-yyoussefshahins-projects.vercel.app/",
-    },
-    {
-      id: "02",
-      tag: "BRAND SYSTEM",
-      title: "NOIR Fashion Identity",
-      desc: "Luxury brutalist fashion identity system for modern brands.",
-      img: "https://images.unsplash.com/photo-1521334884684-d80222895322",
-      link: "#",
-    },
-    {
-      id: "03",
-      tag: "PORTFOLIO ENGINE",
-      title: "YH Studio System",
-      desc: "Conversion-focused portfolio designed to generate clients.",
-      img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
-      link: "#",
-    },
-  ];
-
   return (
-    <div className="bg-black text-white min-h-screen overflow-x-hidden">
+    <div className="bg-black text-white min-h-screen font-sans">
 
-      {/* CURSOR */}
-      <div
-        className="fixed w-4 h-4 bg-white rounded-full pointer-events-none mix-blend-difference z-[999]"
-        style={{
-          left: cursor.x,
-          top: cursor.y,
-          transform: "translate(-50%, -50%)",
-        }}
-      />
+      {/* FLOATING CTA */}
+      <div className="fixed bottom-5 right-5 flex flex-col gap-3 z-50">
+        <a
+          href={`https://wa.me/${WHATSAPP_NUMBER}`}
+          className="bg-green-500 px-4 py-3 rounded-full shadow-lg hover:scale-110 transition"
+        >
+          WhatsApp
+        </a>
 
-      {/* ATMOSPHERE */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 bg-black" />
-        <div className="absolute top-[-200px] left-1/2 w-[600px] h-[600px] bg-purple-600/20 blur-[160px] rounded-full" />
-        <div className="absolute inset-0 opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/noise.png')]" />
+        <a
+          href="#contact"
+          className="bg-white text-black px-4 py-3 rounded-full shadow-lg hover:scale-110 transition"
+        >
+          Hire Me
+        </a>
       </div>
 
-      {/* PAGE FADE IN */}
-      <motion.div
-        initial={{ opacity: 1 }}
-        animate={{ opacity: 0 }}
-        transition={{ duration: 1 }}
-        className="fixed inset-0 bg-black z-[9999] pointer-events-none"
-      />
+      {/* NAV */}
+      <header className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+          <h1 className="font-bold tracking-wide">
+            Youssef Hossam <span className="text-white/40">// Developer</span>
+          </h1>
 
-      {/* HERO */}
-      <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative z-10">
-        <h1 className="text-6xl md:text-8xl font-bold tracking-tighter">
-          DIGITAL EXPERIENCE STUDIO
-        </h1>
+          <nav className="hidden md:flex gap-8 text-sm text-gray-300">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#work">Work</a>
+            <a href="#why">Why Me</a>
+            <a href="#contact">Contact</a>
+          </nav>
 
-        <p className="text-gray-400 mt-6 max-w-xl">
-          We design and build high-performance websites that convert visitors into clients.
+          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+            ☰
+          </button>
+        </div>
+
+        {menuOpen && (
+          <div className="md:hidden px-6 pb-4 space-y-2 text-gray-300">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#work">Work</a>
+            <a href="#why">Why Me</a>
+            <a href="#contact">Contact</a>
+          </div>
+        )}
+      </header>
+
+      {/* HERO (ULTRA PREMIUM) */}
+      <motion.section
+  id="home"
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  className="min-h-screen flex items-center justify-center text-center px-6 relative overflow-hidden"
+>
+
+  {/* NOISE / DEPTH BACKGROUND */}
+  <div className="absolute inset-0 bg-black" />
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#222,black)] opacity-80" />
+
+  <motion.div
+    initial={{ y: 60, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    transition={{ duration: 0.8 }}
+    className="relative z-10"
+  >
+
+    <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-none">
+      I DESIGN <br />
+      DIGITAL <span className="text-gray-500">SYSTEMS</span>
+    </h1>
+
+    <p className="text-gray-400 max-w-xl mx-auto mt-8 text-sm md:text-base">
+      Not websites. Not templates. I build conversion-focused digital experiences that behave like products, not pages.
+    </p>
+
+    <div className="mt-10 flex justify-center gap-4">
+      <a
+        href="#work"
+        className="px-6 py-3 bg-white text-black hover:scale-105 transition"
+      >
+        Enter Work
+      </a>
+
+      <a
+        href="#contact"
+        className="px-6 py-3 border border-white/20 hover:bg-white hover:text-black transition"
+      >
+        Contact
+      </a>
+    </div>
+
+  </motion.div>
+</motion.section>
+
+      {/* ABOUT */}
+      <motion.section
+        id="about"
+        initial="hidden"
+        whileInView="show"
+        variants={fadeUp}
+        transition={{ duration: 0.6 }}
+        className="max-w-5xl mx-auto px-6 py-20"
+      >
+        <h3 className="text-3xl font-bold mb-6">About Me</h3>
+
+        <p className="text-gray-400 leading-relaxed">
+          I don’t build websites. I design attention systems.
         </p>
+      </motion.section>
 
-        <div className="mt-10 flex gap-4">
-          <MagneticButton>
-            <a href="#work" className="px-6 py-3 bg-white text-black rounded-xl">
-              View Work
-            </a>
-          </MagneticButton>
+      
+      {/* WORK */}
+<section id="work" className="py-32 px-6 bg-black">
 
-          <MagneticButton>
-            <a href="#contact" className="px-6 py-3 border border-white/20 rounded-xl">
-              Contact
-            </a>
-          </MagneticButton>
-        </div>
-      </section>
+  <div className="max-w-6xl mx-auto">
 
-      {/* WORK (CINEMATIC APPLE STYLE) */}
-      <section id="work" className="py-40 px-6 relative z-10">
+    {/* HEADER */}
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="text-center mb-24"
+    >
+      <h2 className="text-5xl md:text-7xl font-bold tracking-tighter">
+        SELECTED <span className="text-gray-500">WORK</span>
+      </h2>
 
-        <div className="text-center mb-32">
-          <h2 className="text-6xl font-bold tracking-tighter">
-            SELECTED <span className="text-gray-500">WORK</span>
-          </h2>
-        </div>
+      <p className="text-gray-500 mt-6 max-w-xl mx-auto text-sm">
+        A collection of systems, brands, and digital experiences focused on conversion and identity.
+      </p>
+    </motion.div>
 
-        <div className="space-y-40 max-w-6xl mx-auto">
+    <div className="space-y-32">
 
-          {projects.map((p, i) => (
-            <motion.div
-              key={i}
-              variants={reveal}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
-              className={`md:flex items-center gap-16 ${
-                i % 2 === 1 ? "md:flex-row-reverse" : ""
-              }`}
+      {/* PROJECT TEMPLATE */}
+      {[
+        {
+          id: "01",
+          tag: "LIVE SYSTEM",
+          title: "CafeDemo Experience",
+          desc: "A conversion-focused café website designed as a digital product, not a static page.",
+          img: "https://images.unsplash.com/photo-1521017432531-fbd92d768814",
+          link: "https://cafedemo-portfolio-39tiemm5s-yyoussefshahins-projects.vercel.app/",
+        },
+        {
+          id: "02",
+          tag: "BRAND SYSTEM",
+          title: "NOIR Fashion Identity",
+          desc: "A brutalist luxury fashion identity system built for modern streetwear brands.",
+          img: "https://images.unsplash.com/photo-1521334884684-d80222895322",
+          link: "#",
+        },
+        {
+          id: "03",
+          tag: "PORTFOLIO ENGINE",
+          title: "YH Studio System",
+          desc: "A conversion-focused portfolio system designed to turn attention into client inquiries.",
+          img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+          link: "#",
+        },
+      ].map((p, i) => (
+        <motion.a
+          key={i}
+          href={p.link}
+          target={p.link !== "#" ? "_blank" : "_self"}
+          initial={{ opacity: 0, y: 80 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, delay: i * 0.15 }}
+          whileHover={{ scale: 1.01 }}
+          className={`group flex flex-col md:flex-row items-center gap-10 ${
+            i % 2 === 1 ? "md:flex-row-reverse" : ""
+          }`}
+        >
+
+          {/* IMAGE */}
+          <div className="w-full md:w-1/2 overflow-hidden rounded-2xl">
+            <motion.img
+              src={p.img}
+              className="w-full h-[450px] object-cover group-hover:scale-110 transition duration-700"
+              whileHover={{ scale: 1.08 }}
+              transition={{ duration: 0.6 }}
+            />
+          </div>
+
+          {/* TEXT */}
+          <div className="w-full md:w-1/2">
+
+            <p className="text-green-400 text-xs tracking-[0.3em]">
+              {p.id} — {p.tag}
+            </p>
+
+            <h3 className="text-4xl font-bold mt-4 leading-tight group-hover:tracking-wide transition-all duration-300">
+              {p.title}
+            </h3>
+
+            <p className="text-gray-400 mt-6 text-sm leading-relaxed">
+              {p.desc}
+            </p>
+
+            <motion.p
+              whileHover={{ x: 10 }}
+              className="text-white/50 mt-8 group-hover:text-white transition cursor-pointer"
             >
-              <img
-                src={p.img}
-                className="md:w-1/2 h-[500px] object-cover rounded-2xl shadow-2xl hover:scale-105 transition duration-700"
-              />
+              Open Case Study →
+            </motion.p>
 
-              <div className="md:w-1/2 mt-10 md:mt-0">
-                <p className="text-green-400 text-xs tracking-[0.3em]">
-                  {p.id} — {p.tag}
-                </p>
+          </div>
 
-                <h3 className="text-4xl font-bold mt-4">{p.title}</h3>
+        </motion.a>
+      ))}
 
-                <p className="text-gray-400 mt-6">{p.desc}</p>
+    </div>
+  </div>
+</section>
 
-                <p className="text-white/50 mt-8">Open Case Study →</p>
+      {/* WHY ME */}
+      <section id="why" className="py-20 px-6 bg-white/5">
+        <div className="max-w-6xl mx-auto text-center">
+          <h3 className="text-3xl font-bold mb-12">Why Clients Choose Me</h3>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              "Fast Delivery",
+              "Modern Clean Design",
+              "Business Conversion Focus",
+            ].map((t, i) => (
+              <div key={i} className="p-6 border border-white/10 rounded-xl bg-black">
+                {t}
               </div>
-            </motion.div>
-          ))}
-
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="py-40 px-6 text-center relative z-10">
-        <h2 className="text-4xl font-bold">Let’s Build Something Powerful</h2>
+      <section id="contact" className="py-24 px-6">
+        <div className="max-w-2xl mx-auto text-center">
+          <h3 className="text-3xl font-bold mb-6">Let’s Build Something Powerful</h3>
 
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 space-y-4">
-          <input className="w-full p-3 bg-black border border-white/10 rounded-xl"
-            name="name" placeholder="Name" onChange={handleChange} />
+          <p className="text-gray-400 mb-6">
+            Have a project? I’ll turn it into a high-converting website.
+          </p>
 
-          <input className="w-full p-3 bg-black border border-white/10 rounded-xl"
-            name="email" placeholder="Email" onChange={handleChange} />
+          <p className="text-gray-300 mb-2">📞 {PHONE}</p>
 
-          <textarea className="w-full p-3 bg-black border border-white/10 rounded-xl h-32"
-            name="message" placeholder="Message" onChange={handleChange} />
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            className="text-green-400 hover:underline"
+          >
+            WhatsApp Chat
+          </a>
 
-          <button className="w-full bg-white text-black py-3 rounded-xl">
-            Send Message
-          </button>
+          <form onSubmit={handleSubmit} className="space-y-4 mt-6">
+            <input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Your Name"
+              className="w-full p-3 rounded-xl bg-black border border-white/10"
+            />
 
-          {sent && <p className="text-green-400">Message sent ✔</p>}
-        </form>
+            <input
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Your Email"
+              className="w-full p-3 rounded-xl bg-black border border-white/10"
+            />
+
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              placeholder="Your Project Idea"
+              className="w-full p-3 rounded-xl bg-black border border-white/10 h-32"
+            />
+
+            <button className="w-full bg-white text-black py-3 rounded-xl font-semibold hover:scale-105 transition">
+              Send Message
+            </button>
+
+            {sent && <p className="text-green-400">Message sent ✔</p>}
+          </form>
+        </div>
       </section>
 
-      {/* FOOTER WITH WATERMARK */}
-      <footer className="py-10 text-center border-t border-white/10 text-gray-500 text-sm">
-        © 2026 YH Studio — Built by Youssef Hossam
+      {/* FOOTER */}
+      <footer className="text-center py-6 border-t border-white/10 text-gray-500 text-sm">
+        © 2026 Youssef Hossam — Built for clients
       </footer>
-
     </div>
   );
 }
