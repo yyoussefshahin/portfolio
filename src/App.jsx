@@ -168,30 +168,109 @@ export default function Portfolio() {
       </motion.section>
 
       {/* WORK */}
-      <section id="work" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h3 className="text-3xl font-bold text-center mb-12">Selected Work</h3>
+      {/* WORK */}
+<section id="work" className="py-28 px-6 bg-black">
+  <div className="max-w-6xl mx-auto">
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {projects.map((p, i) => (
-              <motion.a
-                key={i}
-                href={p.link}
-                target={p.link !== "#" ? "_blank" : "_self"}
-                whileHover={{ scale: 1.05 }}
-                className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition block"
-              >
-                <h4 className="font-bold">{p.name}</h4>
-                <p className="text-gray-400 text-sm mt-2">{p.desc}</p>
-                <p className="text-green-400 text-xs mt-3">
-                  {p.link !== "#" ? "View Live →" : "Coming Soon"}
-                </p>
-              </motion.a>
-            ))}
-          </div>
+    {/* SECTION TITLE */}
+    <div className="text-center mb-16">
+      <h3 className="text-3xl md:text-5xl font-light tracking-widest">
+        SELECTED WORK
+      </h3>
+      <p className="text-gray-500 mt-4 text-sm">
+        High-end digital experiences for brands & businesses
+      </p>
+    </div>
+
+    {/* GRID */}
+    <div className="grid md:grid-cols-3 gap-8">
+
+      {/* PROJECT 1 - LIVE */}
+      <a
+        href="https://cafedemo-portfolio-39tiemm5s-yyoussefshahins-projects.vercel.app/"
+        target="_blank"
+        className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+      >
+
+        {/* IMAGE */}
+        <div className="h-72 bg-[url('https://images.unsplash.com/photo-1521017432531-fbd92d768814')] bg-cover bg-center group-hover:scale-110 transition duration-700" />
+
+        {/* OVERLAY */}
+        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition" />
+
+        {/* TEXT */}
+        <div className="absolute bottom-0 p-6">
+          <p className="text-green-400 text-xs tracking-widest">
+            LIVE PROJECT
+          </p>
+
+          <h4 className="text-xl font-light mt-1">
+            CafeDemo — Luxury Café Experience
+          </h4>
+
+          <p className="text-gray-400 text-sm mt-2">
+            Conversion-focused café website with premium UI/UX system.
+          </p>
+
+          <p className="text-white/60 text-xs mt-4 group-hover:text-white transition">
+            View Live →
+          </p>
         </div>
-      </section>
+      </a>
 
+      {/* PROJECT 2 */}
+      <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+
+        <div className="h-72 bg-[url('https://images.unsplash.com/photo-1521334884684-d80222895322')] bg-cover bg-center group-hover:scale-110 transition duration-700" />
+        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition" />
+
+        <div className="absolute bottom-0 p-6">
+          <p className="text-green-400 text-xs tracking-widest">
+            BRAND SYSTEM
+          </p>
+
+          <h4 className="text-xl font-light mt-1">
+            NOIR — Fashion Identity
+          </h4>
+
+          <p className="text-gray-400 text-sm mt-2">
+            Luxury streetwear branding system built for modern fashion labels.
+          </p>
+
+          <p className="text-white/50 text-xs mt-4">
+            Case Study (Private)
+          </p>
+        </div>
+      </div>
+
+      {/* PROJECT 3 */}
+      <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+
+        <div className="h-72 bg-[url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d')] bg-cover bg-center group-hover:scale-110 transition duration-700" />
+        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition" />
+
+        <div className="absolute bottom-0 p-6">
+          <p className="text-green-400 text-xs tracking-widest">
+            FREELANCER SYSTEM
+          </p>
+
+          <h4 className="text-xl font-light mt-1">
+            YH Studio — Conversion Portfolio
+          </h4>
+
+          <p className="text-gray-400 text-sm mt-2">
+            Designed to attract clients and convert visitors into leads.
+          </p>
+
+          <p className="text-white/50 text-xs mt-4">
+            Strategy Build
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
       {/* WHY ME */}
       <section id="why" className="py-20 px-6 bg-white/5">
         <div className="max-w-6xl mx-auto text-center">
